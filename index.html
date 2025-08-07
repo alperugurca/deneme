@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Yapay Zeka Eğitmenleri</title>
+  <style>
+    body { font-family: Arial; margin: 40px; background: #f2f2f2; }
+    h1 { text-align: center; }
+    form, .liste { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+    input, textarea, button { width: 100%; margin-top: 10px; padding: 10px; }
+    .egitmen { background: #eee; padding: 10px; margin-top: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+
+<h1>Yapay Zeka Eğitmenleri</h1>
+
+<form id="egitmenForm">
+  <input type="text" id="isim" placeholder="Eğitmen Adı" required>
+  <textarea id="icerik" placeholder="Eğitim İçeriği" required></textarea>
+  <button type="submit">Ekle</button>
+</form>
+
+<div class="liste" id="liste"></div>
+
+<script>
+const APP_ID = "BURAYA_YAPIŞTIR";
+const REST_API_KEY = "BURAYA_YAPIŞTIR";
+const SERVER_URL = "https://parseapi.back4app.com";
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch(`${SERVER_URL}/classes/Egitmen`, {
+    headers: {
+      "X-Parse-Application-Id": APP_ID,
+      "X-Parse-REST-API-Key": REST_API_KEY,
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    const liste = document.getElementById("liste");
+    data.results.forEach(e => {
+      const div = document.createElement("div");
+      div.className = "egitmen";
+      div.innerHTML = `<h3>${e.isim}</h3><p>${e.icerik}</p>`;
+      liste.appendChild(div);
+    });
+  });
+});
+
+document.getElementById("egitmenForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const isim = document.getElementById("isim").value.trim();
+  const icerik = document.getElementById("icerik").value.trim();
+
+  fetch(`${SERVER_URL}/classes/Egitmen`, {
+    method: "POST",
+    headers: {
+      "X-Parse-Application-Id": APP_ID,
+      "X-Parse-REST-API-Key": REST_API_KEY,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ isim, icerik })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("Eğitmen eklendi!");
+    location.reload();
+  });
+});
+</script>
+
+</body>
+</html>
