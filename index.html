@@ -1,79 +1,71 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Yapay Zeka Eğitmenleri</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Eğitmenleri</title>
   <style>
-    body { font-family: Arial; margin: 40px; background: #f4f4f4; }
-    h1 { text-align: center; }
-    form, .liste { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
-    input, textarea, button { width: 100%; margin-top: 10px; padding: 10px; font-size: 1em; }
-    .egitmen { background: #e9e9e9; padding: 10px; margin-top: 10px; border-radius: 5px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      padding: 30px 0;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .instructor {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .instructor h2 {
+      margin-top: 0;
+      color: #34495e;
+    }
+    .instructor p {
+      margin: 10px 0;
+    }
+    .instructor a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+    .instructor a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
-<h1>Yapay Zeka Eğitmenleri</h1>
+  <header>
+    <h1>AI Eğitmenleri</h1>
+    <p>Yapay Zeka alanında uzman eğitmenler ve içerikleri</p>
+  </header>
 
-<form id="egitmenForm">
-  <input type="text" id="isim" placeholder="Eğitmen Adı" required>
-  <textarea id="icerik" placeholder="Eğitim İçeriği" required></textarea>
-  <button type="submit">Ekle</button>
-</form>
+  <div class="instructor">
+    <h2>Dr. Zeynep Yılmaz</h2>
+    <p>Makine öğrenmesi, doğal dil işleme ve etik AI konularında 10+ yıl deneyimli akademisyen.</p>
+    <p><a href="https://example.com/zeynep-egitim">Eğitim İçeriğini Görüntüle</a></p>
+  </div>
 
-<div class="liste" id="liste"></div>
+  <div class="instructor">
+    <h2>Ahmet Kaya</h2>
+    <p>Endüstride derin öğrenme projeleri geliştiren kıdemli AI mühendisi. Görüntü işleme uzmanı.</p>
+    <p><a href="https://example.com/ahmet-kurs">Eğitim İçeriğini Görüntüle</a></p>
+  </div>
 
-<script>
-  const APP_ID = "SENIN_APP_ID";
-  const REST_API_KEY = "SENIN_REST_API_KEY";
-  const SERVER_URL = "https://parseapi.back4app.com";
-
-  function listeleEgitmenler() {
-    fetch(`${SERVER_URL}/classes/Egitmen`, {
-      headers: {
-        "X-Parse-Application-Id": APP_ID,
-        "X-Parse-REST-API-Key": REST_API_KEY
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      const liste = document.getElementById("liste");
-      liste.innerHTML = "";
-      data.results.forEach(e => {
-        const div = document.createElement("div");
-        div.className = "egitmen";
-        div.innerHTML = `<h3>${e.isim}</h3><p>${e.icerik}</p>`;
-        liste.appendChild(div);
-      });
-    });
-  }
-
-  document.getElementById("egitmenForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const isim = document.getElementById("isim").value.trim();
-    const icerik = document.getElementById("icerik").value.trim();
-
-    if (!isim || !icerik) return;
-
-    fetch(`${SERVER_URL}/classes/Egitmen`, {
-      method: "POST",
-      headers: {
-        "X-Parse-Application-Id": APP_ID,
-        "X-Parse-REST-API-Key": REST_API_KEY,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ isim, icerik })
-    })
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("isim").value = "";
-      document.getElementById("icerik").value = "";
-      listeleEgitmenler();
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", listeleEgitmenler);
-</script>
+  <div class="instructor">
+    <h2>Elif Demir</h2>
+    <p>Veri bilimi eğitmeni. Python, pandas ve modelleme üzerine kapsamlı eğitimler sunuyor.</p>
+    <p><a href="https://example.com/elif-ders">Eğitim İçeriğini Görüntüle</a></p>
+  </div>
 
 </body>
 </html>
